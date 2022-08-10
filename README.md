@@ -1,11 +1,17 @@
-# Macro Keyboard using QMK Firmware
+## Macro Keyboard using QMK Firmware
 
-This guide provides a way to create a Keyboard or Macro Keyboard using an **Arduino Pro Micro** and **QMK Firmware**.
+This guide provides a way to create a Keyboard or Macro Keyboard using an **Arduino Pro Micro** and **QMK Firmware**. The only things you will need initially are **Arduino Pro Micro**, a **PC** to build a firmware and a **basic knowledge of eletronics**.
 
-Access [the link](https://docs.qmk.fm/#/newbs_getting_started) to understand what QMK is and how to configure your environment.
+> It's nice to have some buttons!
+
+
+
+## Configure QMK environment
+
+Go to [the link](https://docs.qmk.fm/#/newbs_getting_started) to understand what QMK is and how to configure your environment.
 
 ```bash
-# Using the method described by the qmk website, you may see a small error message that 
+# Using the method described by the QMK website, you may see a small error message that 
 # you don't want to see, so I rather use the command line below.
 $ git clone https://github.com/qmk/qmk_firmware.git && cd qmk_firmware && make git-submodule
 ```
@@ -14,41 +20,45 @@ $ git clone https://github.com/qmk/qmk_firmware.git && cd qmk_firmware && make g
 
 
 
+## Create keyboard layout
 
-
-
-
-2- http://www.keyboard-layout-editor.com/#/gists/deea4cf08014d7d683c95740520a8dd8
-
-Crie o layout do teclado. Vá em **</> Raw Data.** Copie o código e cole no site abaixo.
-
-
-
-3 - https://kbfirmware.com/
-
-Cole o código informado e clique em import. Vá em **compile** e clique em **download .zip**. Descompacte o arquivo e edite o **keymap.c**. 
-
-
-
-\> Voce pode apagar o que não importa, por exemplo:
-
-Meu código - **[{a:7},"`","F13","F14"]**
+Go to [the link](http://www.keyboard-layout-editor.com/#/gists/deea4cf08014d7d683c95740520a8dd8) (this link is an example used by me) and create your own layout.
 
 ![img](https://lh6.googleusercontent.com/WZ3W_cGnj67TFkIb8NItuvJoKpPzlnYGahP_Csea0YuJj-TVNiOSwokVi33LSw8yJ7qlF-mRCeLxjEKpFG24eMalt4j40gwR6fgSEoi7cxU51DNMjK_YWPcSPfy4VUM_UXYIyMUV_GSDqE7ixn_ygU4)
 
+This image is the layout I'm using.
+
+After you create the layout, go to `</> Raw Data` and copy the code shown below.
+
+> My code is `[{a:7},".","F13","F14"]`.
 
 
-Meu código no arquivo keymap.c no meu ambiente do QMK:
 
-**#include "kb.h"**
+## Build your firmware
 
-**const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {**
+Go to [the link](https://kbfirmware.com/) and paste the code that you copied in the last step, after that click in `import`, `compile`, and `download.zip`. Now extract the files, the only important folder is inside `layout/qmk_firmware/keyboards` and its name is `kb`.
 
-  **KEYMAP(**
+If you rename this folder will be necessary rename two the files inside it, the files are `kb.c` and `kb.h`, besides that is extremaly necessary to edit `kb.c` and change the *include* to the new name.
 
-​     **KC_GRV, KC_F13, KC_F14)**
+> So in my case I change the name of the folder to `macrokeyboard` and the files inside it are `macrokeyboard.c` and `macrokeyboard.h`.
+>
+> Don't forget to change the `include` inside `macrokeyboard.c`.
 
-**};**
+
+
+Now edit the `keymap.c` file, it's in `macrokeyboard/keymaps/default/`.
+
+In this file you must keep only the first 4 lines. Follow example below.
+
+```bash
+#include "kb.h"
+const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+  KEYMAP(
+     KC_GRV, KC_F13, KC_F14)
+};
+```
+
+
 
 
 
