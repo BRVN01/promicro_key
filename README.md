@@ -160,3 +160,5 @@ https://github.com/qmk/qmk_toolbox/releases/download/0.2.2/qmk_toolbox.exe
 https://docs.qmk.fm/#/newbs_building_firmware
 
 https://github.com/pithybuilds/MacroKeypad/blob/main/vial-qmk/keyboards/_pb_l1v32a/keymaps/default/keymap.c
+
+https://github.com/qmk/qmk_firmware/blob/master/docs/feature_programmable_button.md
