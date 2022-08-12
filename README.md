@@ -24,5 +24,7 @@ I have three folders here and each folder has a project type, below you see the 
 
   I know what but my Linux and Windows system doesn't recognize F13-F24 keys, so I had an idea to use combo keys like ALT+NUMBER when Number is a KeyPad number to create your functions on Linux (I haven't tested this on Windows but I think it works).
 
+  In `keymap.c` I have documented some things like links and other things that I find interesting.
+  
   > Level: Intermediate
 
