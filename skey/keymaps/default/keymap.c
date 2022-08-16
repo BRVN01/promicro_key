@@ -17,8 +17,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ├───────┼───────┤ └───────┘
     │ Alt+6 │ Alt+7 │
     └───────┴───────┘
-  
-      Quantum_layer
+
+      Layers - Used to switch between layers
+    ┌─────────┬─────────┐
+    │ Media   │         │
+    ├─────────┼─────────┤ ┌─────────┐
+    │ Quantum │         │ │ Common  │
+    ├─────────┼─────────┤ └─────────┘
+    │         │         │
+    └─────────┴─────────┘  
+
+      Quantum_layer - Used to update the firmware
     ┌───────┬───────┐
     │       │       │
     ├───────┼───────┤ ┌───────┐
@@ -27,7 +36,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     │       │       │
     └───────┴───────┘  
 
-      Media_layer
+      Media_layer - Used to control Media
     ┌───────┬───────┐
     │       │ Next  │
     ├───────┼───────┤ ┌───────┐
@@ -35,17 +44,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ├───────┼───────┤ └───────┘
     │ Pl/St │       │ // Play and Stop | 
     └───────┴───────┘  
-
-      Layers
-    ┌─────────┬─────────┐
-    │ Common  │         │
-    ├─────────┼─────────┤ ┌─────────┐
-    │ Quantum │ Media   │ │ Layers  │
-    ├─────────┼─────────┤ └─────────┘
-    │         │         │
-    └─────────┴─────────┘  
-
-
   */
 
 	[0] = LAYOUT(
