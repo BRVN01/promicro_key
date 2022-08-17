@@ -8,6 +8,13 @@
 //  BAR = SAFE_RANGE
 //};
 
+enum my_keycodes {
+  gitstatus = SAFE_RANGE,
+  gitdiff,
+  gitpush,
+  gitpull
+};
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /*    Common Layer
     ┌───────┬───────┐
@@ -44,17 +51,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ├───────┼───────┤ └───────┘
     │ Pl/St │       │ // Play and Stop | 
     └───────┴───────┘  
+
+      Git
+    ┌───────┬───────┐
+    │Status │ Diff  │
+    ├───────┼───────┤ ┌───────┐
+    │ Push  │ Pull  │ │Layers │
+    ├───────┼───────┤ └───────┘
+    │       │       │ 
+    └───────┴───────┘  
   */
 
 	[0] = LAYOUT(
-		BR_ACUT, LT(1, KC_LNG1), 
+		BR_ACUT, LT(2, KC_LNG1), 
     LALT(KC_P4), LALT(KC_P5), TO(1),
 		LALT(KC_P6), LALT(KC_P7)
 	),
 	[1] = LAYOUT(
         TO(3), KC_NO, 
         TO(2), KC_NO, TO(0),
-        KC_NO, KC_NO
+        TO(4), KC_NO
     ),
 	[2] = LAYOUT(
         KC_NO, KC_NO, 
@@ -65,8 +81,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_NO, KC_MNXT,
         KC_MUTE, KC_MPRV, TO(1),
         KC_MPLY, KC_NO
+    ),
+	[4] = LAYOUT(
+        gitstatus, gitdiff,
+        gitpush, gitpull, TO(1),
+        KC_NO, KC_NO
     )
-
 
 //	[0] = LAYOUT(
 //		KC_P2, KC_P1, 
@@ -83,6 +103,43 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //        KC_C, KC_D, TO(1),
 //        KC_G, KC_L
 //    )
+};
+
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {    
+    case BR_ACUT:
+      if (record->event.pressed) {
+        SEND_STRING("```");
+      }
+      return false;
+      break;
+    case gitstatus:
+      if (record->event.pressed) {
+        SEND_STRING("git status");
+      }
+      return false;
+      break;
+    case gitdiff:
+      if (record->event.pressed) {
+        SEND_STRING("git diff");
+      }
+      return false;
+      break;
+    case gitpush:
+      if (record->event.pressed) {
+        SEND_STRING("git push");
+      }
+      return false;
+      break;
+    case gitpull:
+      if (record->event.pressed) {
+        SEND_STRING("git pull");
+      }
+      return false;
+      break;
+  }
+  return true;
 };
 
 // LALT(LCTL(KC_DEL))
