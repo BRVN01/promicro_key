@@ -1,12 +1,16 @@
 
 #include QMK_KEYBOARD_H
 #include <sendstring_brazilian_abnt2.h>
+#include <stdlib.h>
+#define OLED_FONT_HEIGHT 3
 
-// I can create a custom keycode:
-//enum my_keycodes {
-//  FOO = SAFE_RANGE,
-//  BAR = SAFE_RANGE
-//};
+// Display connection on Arduino Pro Micro
+// Display -> Pro Micro
+// SDA -> 2 (D1)
+// SCK -> 3 (D0)
+// VCC -> VCC
+// GND -> GND
+
 
 enum my_keycodes {
   gitstatus = SAFE_RANGE,
@@ -31,7 +35,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ├─────────┼─────────┤ ┌─────────┐
     │ Quantum │         │ │ Common  │
     ├─────────┼─────────┤ └─────────┘
-    │         │         │
+    │ Git     │         │
     └─────────┴─────────┘  
 
       Quantum_layer - Used to update the firmware
@@ -85,24 +89,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[4] = LAYOUT(
         gitstatus, gitdiff,
         gitpush, gitpull, TO(1),
-        KC_NO, KC_NO
+        KC_A, KC_B
     )
-
-//	[0] = LAYOUT(
-//		KC_P2, KC_P1, 
-//    KC_P4, KC_P5, TO(1),
-//		KC_P6, KC_P7
-//	),
-//	[1] = LAYOUT(
-//		KC_NO, KC_NO, 
-//    TO(2), KC_NO, TO(0),
-//		KC_NO, KC_NO
-//	),
-//	[2] = LAYOUT(
-//        KC_B, KC_W, 
-//        KC_C, KC_D, TO(1),
-//        KC_G, KC_L
-//    )
 };
 
 
@@ -116,7 +104,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break;
     case gitstatus:
       if (record->event.pressed) {
-        SEND_STRING("git status");
+        SEND_STRING("git status\n");
       }
       return false;
       break;
@@ -128,19 +116,60 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break;
     case gitpush:
       if (record->event.pressed) {
-        SEND_STRING("git push");
+        SEND_STRING("git push\n");
       }
       return false;
       break;
     case gitpull:
       if (record->event.pressed) {
-        SEND_STRING("git pull");
+        SEND_STRING("git pull\n");
       }
       return false;
-      break;
+      break;    
   }
   return true;
 };
+
+#ifdef OLED_ENABLE
+bool oled_task_user(void) {
+    switch (get_highest_layer(layer_state)) {
+        case 0:
+            oled_write_P(PSTR("Perfil: Common\n"), false);
+            oled_write_P(PSTR(" ```    |  kc_lng1\n"), false);
+            oled_write_P(PSTR("alt+4   |  alt+5 \n"), false);
+            oled_write_P(PSTR("alt+6   |  alt+7   "), false);
+            break;
+        case 1:
+            oled_write_P(PSTR("Perfil: Layers\n"), false);
+            oled_write_P(PSTR("Media   |        \n"), false);
+            oled_write_P(PSTR("Quantum |        \n"), false);
+            oled_write_P(PSTR("GIT     |         "), false);
+            break;
+        case 2:
+            oled_write_P(PSTR("Perfil: Quantum\n"), false);
+            oled_write_P(PSTR("        |        \n"), false);
+            oled_write_P(PSTR("qk_boot |        \n"), false);
+            oled_write_P(PSTR("        |  qk_exec"), false);
+            break;
+        case 3:
+            oled_write_P(PSTR("Perfil: Media\n"), false);
+            oled_write_P(PSTR("        |  next\n"), false);
+            oled_write_P(PSTR("mute    |  back\n"), false);
+            oled_write_P(PSTR("p/s     |         "), false);
+            break;
+        case 4:
+            oled_write_P(PSTR("Perfil: GIT\n"), false);
+            oled_write_P(PSTR("status  |  diff\n"), false);
+            oled_write_P(PSTR("push    |  pull\n"), false);
+            oled_write_P(PSTR("        |         "), false);
+            break;
+        default:
+            // Or use the write_ln shortcut over adding '\n' to the end of your string
+            oled_write_ln_P(PSTR("Undefined"), false);
+    }
+    return false;
+}
+#endif
 
 // LALT(LCTL(KC_DEL))
 

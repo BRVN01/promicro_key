@@ -1,9 +1,10 @@
 
 #include "config_common.h"
-#undef TAPPING_TERM
-#define TAPPING_TERM 250
-#define ONESHOT_TIMEOUT 500
-#define ONESHOT_TAP_TOGGLE 3
+//#undef TAPPING_TERM
+//#define TAPPING_TERM 250
+//#define ONESHOT_TIMEOUT 500
+//#define ONESHOT_TAP_TOGGLE 3
+#define OLED_FONT_HEIGHT 3
 
 //#define UNICODE_SELECTED_MODES UC_WINC, UC_LNX, UC_MAC
 
