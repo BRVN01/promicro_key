@@ -1,0 +1,6 @@
+# <Default button name> <systemcall - hotkey - write> <new button name> <command>
+p1_b12 systemcall Link_Subpro firefox https://docs.python.org/3/library/subprocess.html
+p1_b9 systemcall PING gnome-terminal -- ping -c2 8.8.8.8
+p1_b1 systemcall FirefoxOpen firefox
+
+p3_b1 systemcall GoogleOpen google-chrome

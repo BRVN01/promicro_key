@@ -1,0 +1,34 @@
+#p1_b1  {
+    background: url("firefox.png");
+    background-size: 100% 100%;
+    background-position: center;
+}
+
+#p3_b1 {
+    background: url("chrome.png");
+    background-size: 100% 100%;
+    background-position: center;
+}
+
+.all_buttons {
+    /*border-radius: 90%;*/
+    font-size: 11px;
+    /*font-weight: bold;*/
+}
+
+#p1_b1:hover,
+#p3_b1:hover,
+.all_buttons:hover {
+    background-size: 120% 120%;
+}
+
+#p1_b1:active,
+#p3_b1:active,
+.all_buttons:active {
+    background-color: white;
+}
+
+/*#p1_b2:focus {*/
+/*    background-color: #b4940f;*/
+/*}*/
+
