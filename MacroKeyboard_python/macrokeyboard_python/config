@@ -4,3 +4,10 @@ p1_b9 systemcall PING gnome-terminal -- ping -c2 8.8.8.8
 p1_b1 systemcall FirefoxOpen firefox
 
 p3_b1 systemcall GoogleOpen google-chrome
+
+# <Default button name> <rename> <new button name>
+Profile1 rename Geral
+Profile2 rename SSH
+Profile3 rename LINKS
+# Profile4 rename teste4
+p3_b4 rename botao4

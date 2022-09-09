@@ -79,12 +79,60 @@ class Handler(object):
                 
                 old_name = line_file[0].lower()
                 exec_level = line_file[1].lower()
+
+                #print('line_file:', line_file, '\n\nold_name[0:6]', old_name[0:7])
+                #print('exec:',exec_level)
+                if old_name[0:7] == 'profile' and exec_level == 'rename':
+                    new_name = line_file[2]
+                    self.only_rename_profile(old_name, new_name)
+                    continue
+
+                elif exec_level == 'rename':
+                    new_name = line_file[2]
+                    self.only_rename(old_name, new_name)
+                    continue
+
                 new_name = line_file[2]
                 command = line_file[3:]
 
                 self.build_button_by_configuration_file(old_name, new_name, exec_level, command)
         finally:
             config.close()
+
+    def only_rename(self, name_to_change, new_name):
+        #print('only_rename', '\nold:', name_to_change , '\n', 'new:', new_name)
+        button_conf = builder.get_object(name_to_change)
+        button_conf.set_label(new_name)
+
+    def only_rename_profile(self, name_to_change, new_name):
+        #print('only_rename_profile', '\nold:', name_to_change , '\n', 'new:', new_name)
+
+        profiles = [ 
+            ['profile1', 'profile4', 'profile8', 'profile12'], # profile1
+            ['profile2', 'profile5', 'profile9', 'profile13'], # profile2
+            ['profile3', 'profile6', 'profile10', 'profile14'], # profile3
+            ['profile', 'profile7', 'profile11', 'profile15'] # profile4
+        ]
+
+        if name_to_change == 'profile1':
+            change = 0
+        elif name_to_change == 'profile2':
+            change = 1
+        elif name_to_change == 'profile3':
+            change = 2
+        elif name_to_change == 'profile4':
+            change = 3
+        else:
+            print('No match!')
+        
+        for list_profiles in profiles[change]:
+            # Debug:
+            #print('list_profiles:',list_profiles)
+            #print('old:',list_profiles)
+            #print('new:',new_name)
+            #print('')
+            button_conf = builder.get_object(list_profiles)
+            button_conf.set_label(new_name)
 
     def build_button_by_configuration_file(self, old_name, new_name, exec_level, command):
         button_builder = builder.get_object(old_name)
