@@ -2,7 +2,6 @@
 #include QMK_KEYBOARD_H
 #include <sendstring_brazilian_abnt2.h>
 #include <stdlib.h>
-#define OLED_FONT_HEIGHT 2
 
 // Display connection on Arduino Pro Micro
 // Display -> Pro Micro
@@ -104,41 +103,41 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   // Base or Common layer
 	[0] = LAYOUT(
-    TO(1),
+                 TO(1),
 		BR_ACUT,     LT(2, KC_LNG1), LALT(KC_P1),
     LALT(KC_P2), LALT(KC_P3),    LALT(KC_P4),
 		LALT(KC_P5), LALT(KC_P6),    LALT(KC_P7)
 	),
   // Layers (2=quantum | 3=media | 4=git | 0=base)
 	[1] = LAYOUT(
-        TO(0),
+               TO(0),
         TO(3), TO(5), KC_NO,
         TO(2), TO(0), KC_NO,
         TO(4), KC_NO, KC_NO
     ),
   // Quantum
 	[2] = LAYOUT(
-        TO(1),
+                   TO(1),
         KC_NO,     KC_NO, KC_NO,
         QK_BOOT,   KC_NO, KC_NO,
         KC_NO,     KC_NO, KC_NO
     ),
   // Media
 	[3] = LAYOUT(
-        TO(1),
+                   TO(1),
         KC_NO,   KC_MNXT, KC_NO,
         KC_MUTE, KC_MPRV, KC_NO,
         KC_MPLY, KC_NO,   KC_NO
     ),
   // GIT
 	[4] = LAYOUT(
-        TO(1),
+                   TO(1),
         gitdiff, gitpull, gitpush,
         gitstatus, gitadd, gitcommit,
         gitlog, gitdiffstaged, KC_EXEC
     ),
 	[5] = LAYOUT(
-        TO(1),
+           TO(1),
         b1, b2, b3,
         b4, b5, b6,
         b7, b8, b9
@@ -271,34 +270,34 @@ bool oled_task_user(void) {
             oled_write_P(PSTR("alt+5|alt+6|Alt+7"), false);
             break;
         case 1:
-            oled_write_P(PSTR("Perfil: Layers            \n"), false);
-            oled_write_P(PSTR("Media   | Teste           \n"), false);
-            oled_write_P(PSTR("Quantum | Base            \n"), false);
-            oled_write_P(PSTR("GIT     |                   "), false);
+            oled_write_P(PSTR("Perfil: Layers\n"), false);
+            oled_write_P(PSTR("Media   | Teste\n"), false);
+            oled_write_P(PSTR("Quantum | Base\n"), false);
+            oled_write_P(PSTR("GIT     | "), false);
             break;
         case 2:
-            oled_write_P(PSTR("Perfil: Quantum           \n"), false);
-            oled_write_P(PSTR("        |                 \n"), false);
-            oled_write_P(PSTR("qk_boot |                 \n"), false);
-            oled_write_P(PSTR("        |  qk_exec          "), false);
+            oled_write_P(PSTR("Perfil: Quantum\n"), false);
+            oled_write_P(PSTR("        |\n"), false);
+            oled_write_P(PSTR("qk_boot |\n"), false);
+            oled_write_P(PSTR("        |  qk_exec"), false);
             break;
         case 3:
-            oled_write_P(PSTR("Perfil: Media             \n"), false);
-            oled_write_P(PSTR("back   |  mute   |  next  \n"), false);
-            oled_write_P(PSTR("p/s    |  mprv            \n"), false);
-            oled_write_P(PSTR("       |                    "), false);
+            oled_write_P(PSTR("Perfil: Media\n"), false);
+            oled_write_P(PSTR("back  | mute | next\n"), false);
+            oled_write_P(PSTR("p/s   | mprv\n"), false);
+            oled_write_P(PSTR("      |  "), false);
             break;
         case 4:
-            oled_write_P(PSTR("Perfil: GIT                 \n"), false);
-            oled_write_P(PSTR("diff   |  pull | push       \n"), false);
-            oled_write_P(PSTR("status |  add  | commit     \n"), false);
-            oled_write_P(PSTR("log    | diff2 |              "), false);
+            oled_write_P(PSTR("Perfil: GIT\n"), false);
+            oled_write_P(PSTR("diff   | pull | push\n"), false);
+            oled_write_P(PSTR("status | add  | commit\n"), false);
+            oled_write_P(PSTR("log    | diff2 | "), false);
             break;
         case 5:
-            oled_write_P(PSTR("Perfil: TESTE               \n"), false);
-            oled_write_P(PSTR("b1 | b2 | b3                \n"), false);
-            oled_write_P(PSTR("b4 | b5 | b6                \n"), false);
-            oled_write_P(PSTR("b7 | b8 | b9                \n"), false);
+            oled_write_P(PSTR("Perfil: TESTE\n"), false);
+            oled_write_P(PSTR("b1 | b2 | b3 \n"), false);
+            oled_write_P(PSTR("b4 | b5 | b6 \n"), false);
+            oled_write_P(PSTR("b7 | b8 | b9 \n"), false);
             break;
         default:
             // Or use the write_ln shortcut over adding '\n' to the end of your string

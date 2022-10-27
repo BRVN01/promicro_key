@@ -12,7 +12,6 @@
 //#define TAPPING_TERM 250
 //#define ONESHOT_TIMEOUT 500
 //#define ONESHOT_TAP_TOGGLE 3
-#define OLED_FONT_HEIGHT 2
 
 //#define UNICODE_SELECTED_MODES UC_WINC, UC_LNX, UC_MAC
 
@@ -22,7 +21,7 @@
 
 /* key matrix pins */
 #define DIRECT_PINS {   \
-    { B3 }, \
+    { B3, B3, B3 }, \
     { F7, B6, B2 }, \
     { B5, B1, D7 }, \
     { B4, E6, C6 }  \
