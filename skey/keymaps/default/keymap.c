@@ -103,45 +103,45 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   // Base or Common layer
 	[0] = LAYOUT(
-                 TO(1),
+    KC_NO,       TO(1),          KC_NO,
 		BR_ACUT,     LT(2, KC_LNG1), LALT(KC_P1),
     LALT(KC_P2), LALT(KC_P3),    LALT(KC_P4),
 		LALT(KC_P5), LALT(KC_P6),    LALT(KC_P7)
 	),
   // Layers (2=quantum | 3=media | 4=git | 0=base)
 	[1] = LAYOUT(
-               TO(0),
-        TO(3), TO(5), KC_NO,
-        TO(2), TO(0), KC_NO,
+        KC_NO, TO(0), KC_NO,
+        TO(3), KC_NO, KC_NO,
+        TO(2), KC_NO, KC_NO,
         TO(4), KC_NO, KC_NO
     ),
   // Quantum
 	[2] = LAYOUT(
-                   TO(1),
+        KC_NO,     TO(1), KC_NO,
         KC_NO,     KC_NO, KC_NO,
         QK_BOOT,   KC_NO, KC_NO,
         KC_NO,     KC_NO, KC_NO
     ),
   // Media
 	[3] = LAYOUT(
-                   TO(1),
-        KC_NO,   KC_MNXT, KC_NO,
-        KC_MUTE, KC_MPRV, KC_NO,
-        KC_MPLY, KC_NO,   KC_NO
+        KC_NO,   TO(1),   KC_NO,
+        KC_MPRV, KC_MUTE, KC_MNXT,
+        KC_MPLY, KC_MSEL, KC_F18,
+        KC_VOLU, KC_VOLD, KC_NO
     ),
   // GIT
 	[4] = LAYOUT(
-                   TO(1),
-        gitdiff, gitpull, gitpush,
-        gitstatus, gitadd, gitcommit,
-        gitlog, gitdiffstaged, KC_EXEC
-    ),
-	[5] = LAYOUT(
-           TO(1),
-        b1, b2, b3,
-        b4, b5, b6,
-        b7, b8, b9
+        KC_NO,     TO(1),         KC_NO,
+        gitdiff,   gitpull,       gitpush,
+        gitstatus, gitadd,        gitcommit,
+        gitlog,    gitdiffstaged, KC_EXEC
     )
+//	[5] = LAYOUT(
+//        KC_NO,   TO(1),
+//        b1, b2, b3,
+//        b4, b5, b6,
+//        b7, b8, b9
+//    )
 };
 
 
@@ -264,41 +264,41 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 bool oled_task_user(void) {
     switch (get_highest_layer(layer_state)) {
         case 0:
-            oled_write_P(PSTR("Perfil: Common\n"), false);
+            oled_write_P(PSTR("Perfil: Common   \n"), false);
             oled_write_P(PSTR(" `   |LNG1 |Alt+1\n"), false);
             oled_write_P(PSTR("alt+2|alt+3|Alt+4\n"), false);
-            oled_write_P(PSTR("alt+5|alt+6|Alt+7"), false);
+            oled_write_P(PSTR("alt+5|alt+6|Alt+7  "), false);
             break;
         case 1:
-            oled_write_P(PSTR("Perfil: Layers\n"), false);
-            oled_write_P(PSTR("Media   | Teste\n"), false);
-            oled_write_P(PSTR("Quantum | Base\n"), false);
-            oled_write_P(PSTR("GIT     | "), false);
+            oled_write_P(PSTR("Perfil: Layers   \n"), false);
+            oled_write_P(PSTR("Media   | Teste |\n"), false);
+            oled_write_P(PSTR("Quantum | Base  |\n"), false);
+            oled_write_P(PSTR("GIT     |       |  "), false);
             break;
         case 2:
-            oled_write_P(PSTR("Perfil: Quantum\n"), false);
-            oled_write_P(PSTR("        |\n"), false);
-            oled_write_P(PSTR("qk_boot |\n"), false);
-            oled_write_P(PSTR("        |  qk_exec"), false);
+            oled_write_P(PSTR("Perfil: Quantum  \n"), false);
+            oled_write_P(PSTR("        |       |\n"), false);
+            oled_write_P(PSTR("qk_boot |       |\n"), false);
+            oled_write_P(PSTR("        |       |  "), false);
             break;
         case 3:
-            oled_write_P(PSTR("Perfil: Media\n"), false);
-            oled_write_P(PSTR("back  | mute | next\n"), false);
-            oled_write_P(PSTR("p/s   | mprv\n"), false);
-            oled_write_P(PSTR("      |  "), false);
+            oled_write_P(PSTR("Perfil: Media    \n"), false);
+            oled_write_P(PSTR("back |mute  |next\n"), false);
+            oled_write_P(PSTR("p/s  |Sconf |mute\n"), false);
+            oled_write_P(PSTR("VolUP|VolDow|      "), false);
             break;
         case 4:
-            oled_write_P(PSTR("Perfil: GIT\n"), false);
-            oled_write_P(PSTR("diff   | pull | push\n"), false);
-            oled_write_P(PSTR("status | add  | commit\n"), false);
-            oled_write_P(PSTR("log    | diff2 | "), false);
+            oled_write_P(PSTR("Perfil: GIT      \n"), false);
+            oled_write_P(PSTR("diff | pull | pus\n"), false);
+            oled_write_P(PSTR("stat | add  | com\n"), false);
+            oled_write_P(PSTR("log  | dif2 |      "), false);
             break;
-        case 5:
-            oled_write_P(PSTR("Perfil: TESTE\n"), false);
-            oled_write_P(PSTR("b1 | b2 | b3 \n"), false);
-            oled_write_P(PSTR("b4 | b5 | b6 \n"), false);
-            oled_write_P(PSTR("b7 | b8 | b9 \n"), false);
-            break;
+//        case 5:
+//            oled_write_P(PSTR("Perfil: TESTE\n"), false);
+//            oled_write_P(PSTR("b1 | b2 | b3 \n"), false);
+//            oled_write_P(PSTR("b4 | b5 | b6 \n"), false);
+//            oled_write_P(PSTR("b7 | b8 | b9 \n"), false);
+//            break;
         default:
             // Or use the write_ln shortcut over adding '\n' to the end of your string
             oled_write_ln_P(PSTR("Undefined"), false);

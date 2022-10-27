@@ -6,7 +6,6 @@
 #define DEVICE_VER      0x0010
 #define MANUFACTURER    BSD
 #define PRODUCT         keyboard
-#define DESCRIPTION     Keyboard
 
 //#undef TAPPING_TERM
 //#define TAPPING_TERM 250
@@ -21,7 +20,7 @@
 
 /* key matrix pins */
 #define DIRECT_PINS {   \
-    { B3, B3, B3 }, \
+    { D4, B3, F6 }, \
     { F7, B6, B2 }, \
     { B5, B1, D7 }, \
     { B4, E6, C6 }  \
@@ -29,8 +28,6 @@
 
 #define ENCODERS_PAD_A { D2 }
 #define ENCODERS_PAD_B { D3 }
-
-#define UNUSED_PINS
 
 /* Debounce reduces chatter (unintended double-presses) - set 0 if debouncing is not needed */
 #define DEBOUNCE 5
