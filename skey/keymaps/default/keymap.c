@@ -2,7 +2,7 @@
 #include QMK_KEYBOARD_H
 #include <sendstring_brazilian_abnt2.h>
 #include <stdlib.h>
-#define OLED_FONT_HEIGHT 3
+#define OLED_FONT_HEIGHT 2
 
 // Display connection on Arduino Pro Micro
 // Display -> Pro Micro
@@ -12,84 +12,136 @@
 // GND -> GND
 
 
+
 enum my_keycodes {
   gitstatus = SAFE_RANGE,
   gitdiff,
   gitpush,
-  gitpull
+  gitpull,
+  gitadd,
+  gitcommit,
+  gitlog,
+  gitdiffstaged
+};
+
+enum teste {
+  b1 = SAFE_RANGE,
+  b2,
+  b3,
+  b4,
+  b5,
+  b6,
+  b7,
+  b8,
+  b9
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /*    Common Layer
-    ┌───────┬───────┐
-    │   `   │  LNG1 │
-    ├───────┼───────┤ ┌───────┐
-    │ Alt+4 │ Alt+5 │ │Layers │
-    ├───────┼───────┤ └───────┘
-    │ Alt+6 │ Alt+7 │
-    └───────┴───────┘
+              ┌─────────┐
+              │ Layers  │
+              └─────────┘
+    ┌─────────┬─────────┬─────────┐
+    │   `     │ LNG1    │ Alt+1   │
+    ├─────────┼─────────┼─────────┤
+    │ Alt+2   │ Alt+3   │ Alt+4   │
+    ├─────────┼─────────┼─────────┤
+    │ Alt+5   │ Alt+6   │ Alt+7   │
+    └─────────┴─────────┴─────────┘ 
+
 
       Layers - Used to switch between layers
-    ┌─────────┬─────────┐
-    │ Media   │         │
-    ├─────────┼─────────┤ ┌─────────┐
-    │ Quantum │         │ │ Common  │
-    ├─────────┼─────────┤ └─────────┘
-    │ Git     │         │
-    └─────────┴─────────┘  
+              ┌─────────┐
+              │  base   │
+              └─────────┘
+    ┌─────────┬─────────┬─────────┐
+    │ Media   │ teste   │         │
+    ├─────────┼─────────┼─────────┤
+    │ Quantum │         │         │
+    ├─────────┼─────────┼─────────┤
+    │ Git     │         │         │
+    └─────────┴─────────┴─────────┘ 
 
       Quantum_layer - Used to update the firmware
-    ┌───────┬───────┐
-    │       │       │
-    ├───────┼───────┤ ┌───────┐
-    │QK_BOOT│       │ │Layers │
-    ├───────┼───────┤ └───────┘
-    │       │       │
-    └───────┴───────┘  
+              ┌─────────┐
+              │  Layers │
+              └─────────┘
+    ┌─────────┬─────────┬─────────┐
+    │         │         │         │
+    ├─────────┼─────────┼─────────┤
+    │ QK_BOOT │         │         │
+    ├─────────┼─────────┼─────────┤
+    │         │         │         │
+    └─────────┴─────────┴─────────┘ 
+
 
       Media_layer - Used to control Media
-    ┌───────┬───────┐
-    │       │ Next  │
-    ├───────┼───────┤ ┌───────┐
-    │ Mute  │ Prev  │ │Layers │ // Mute Output song | 
-    ├───────┼───────┤ └───────┘
-    │ Pl/St │       │ // Play and Stop | 
-    └───────┴───────┘  
+              ┌─────────┐
+              │ Layers  │
+              └─────────┘
+    ┌─────────┬─────────┬─────────┐
+    │ Prev    │ Mute    │ Next    │
+    ├─────────┼─────────┼─────────┤
+    │ Pla/Sto │         │         │
+    ├─────────┼─────────┼─────────┤
+    │         │         │         │
+    └─────────┴─────────┴─────────┘ 
 
-      Git
-    ┌───────┬───────┐
-    │Status │ Diff  │
-    ├───────┼───────┤ ┌───────┐
-    │ Push  │ Pull  │ │Layers │
-    ├───────┼───────┤ └───────┘
-    │       │       │ 
-    └───────┴───────┘  
+
+      GIT
+              ┌─────────┐
+              │ Layers  │
+              └─────────┘
+    ┌─────────┬─────────┬─────────┐
+    │ DIFF    │ PULL    │ PUSH    │
+    ├─────────┼─────────┼─────────┤
+    │ STATUS  │ ADD     │ COMMIT  │
+    ├─────────┼─────────┼─────────┤
+    │ LOG     │LOGSTAGED│         │
+    └─────────┴─────────┴─────────┘ 
   */
 
+
+  // Base or Common layer
 	[0] = LAYOUT(
-		BR_ACUT, LT(2, KC_LNG1), 
-    LALT(KC_P4), LALT(KC_P5), TO(1),
-		LALT(KC_P6), LALT(KC_P7)
+    TO(1),
+		BR_ACUT,     LT(2, KC_LNG1), LALT(KC_P1),
+    LALT(KC_P2), LALT(KC_P3),    LALT(KC_P4),
+		LALT(KC_P5), LALT(KC_P6),    LALT(KC_P7)
 	),
+  // Layers (2=quantum | 3=media | 4=git | 0=base)
 	[1] = LAYOUT(
-        TO(3), KC_NO, 
-        TO(2), KC_NO, TO(0),
-        TO(4), KC_NO
+        TO(0),
+        TO(3), TO(5), KC_NO,
+        TO(2), TO(0), KC_NO,
+        TO(4), KC_NO, KC_NO
     ),
+  // Quantum
 	[2] = LAYOUT(
-        KC_NO, KC_NO, 
-        QK_BOOT, KC_NO, TO(1),
-        KC_NO, KC_EXEC
+        TO(1),
+        KC_NO,     KC_NO, KC_NO,
+        QK_BOOT,   KC_NO, KC_NO,
+        KC_NO,     KC_NO, KC_NO
     ),
+  // Media
 	[3] = LAYOUT(
-        KC_NO, KC_MNXT,
-        KC_MUTE, KC_MPRV, TO(1),
-        KC_MPLY, KC_NO
+        TO(1),
+        KC_NO,   KC_MNXT, KC_NO,
+        KC_MUTE, KC_MPRV, KC_NO,
+        KC_MPLY, KC_NO,   KC_NO
     ),
+  // GIT
 	[4] = LAYOUT(
-        gitstatus, gitdiff,
-        gitpush, gitpull, TO(1),
-        KC_A, KC_B
+        TO(1),
+        gitdiff, gitpull, gitpush,
+        gitstatus, gitadd, gitcommit,
+        gitlog, gitdiffstaged, KC_EXEC
+    ),
+	[5] = LAYOUT(
+        TO(1),
+        b1, b2, b3,
+        b4, b5, b6,
+        b7, b8, b9
     )
 };
 
@@ -110,7 +162,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break;
     case gitdiff:
       if (record->event.pressed) {
-        SEND_STRING("git diff");
+        SEND_STRING("git diff\n");
       }
       return false;
       break;
@@ -125,7 +177,86 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         SEND_STRING("git pull\n");
       }
       return false;
-      break;    
+      break;   
+    case gitadd:
+      if (record->event.pressed) {
+        SEND_STRING("git add\n");
+      }
+      return false;
+      break;   
+    case gitcommit:
+      if (record->event.pressed) {
+        SEND_STRING("git commit\n");
+      }
+      return false;
+      break;   
+    case gitlog:
+      if (record->event.pressed) {
+        SEND_STRING("git log --oneline --decorate --parents\n");
+      }
+      return false;
+      break;   
+    case gitdiffstaged:
+      if (record->event.pressed) {
+        SEND_STRING("git diff --staged\n");
+      }
+      return false;
+      break;  
+// teste
+//    case b1:
+//      if (record->event.pressed) {
+//        SEND_STRING("b1\n");
+//      }
+//      return false;
+//      break;  
+//    case b2:
+//      if (record->event.pressed) {
+//        SEND_STRING("b2\n");
+//      }
+//      return false;
+//      break;  
+//    case b3:
+//      if (record->event.pressed) {
+//        SEND_STRING("b3\n");
+//      }
+//      return false;
+//      break;  
+//    case b4:
+//      if (record->event.pressed) {
+//        SEND_STRING("b4\n");
+//      }
+//      return false;
+//      break;  
+//    case b5:
+//      if (record->event.pressed) {
+//        SEND_STRING("b5\n");
+//      }
+//      return false;
+//      break;  
+//    case b6:
+//      if (record->event.pressed) {
+//        SEND_STRING("b6\n");
+//      }
+//      return false;
+//      break;  
+//    case b7:
+//      if (record->event.pressed) {
+//        SEND_STRING("b7\n");
+//      }
+//      return false;
+//      break;  
+//    case b8:
+//      if (record->event.pressed) {
+//        SEND_STRING("b8\n");
+//      }
+//      return false;
+//      break;  
+//    case b9:
+//      if (record->event.pressed) {
+//        SEND_STRING("b9\n");
+//      }
+//      return false;
+//      break;
   }
   return true;
 };
@@ -135,33 +266,39 @@ bool oled_task_user(void) {
     switch (get_highest_layer(layer_state)) {
         case 0:
             oled_write_P(PSTR("Perfil: Common\n"), false);
-            oled_write_P(PSTR(" ```    |  kc_lng1\n"), false);
-            oled_write_P(PSTR("alt+4   |  alt+5 \n"), false);
-            oled_write_P(PSTR("alt+6   |  alt+7   "), false);
+            oled_write_P(PSTR(" `   |LNG1 |Alt+1\n"), false);
+            oled_write_P(PSTR("alt+2|alt+3|Alt+4\n"), false);
+            oled_write_P(PSTR("alt+5|alt+6|Alt+7"), false);
             break;
         case 1:
-            oled_write_P(PSTR("Perfil: Layers\n"), false);
-            oled_write_P(PSTR("Media   |        \n"), false);
-            oled_write_P(PSTR("Quantum |        \n"), false);
-            oled_write_P(PSTR("GIT     |         "), false);
+            oled_write_P(PSTR("Perfil: Layers            \n"), false);
+            oled_write_P(PSTR("Media   | Teste           \n"), false);
+            oled_write_P(PSTR("Quantum | Base            \n"), false);
+            oled_write_P(PSTR("GIT     |                   "), false);
             break;
         case 2:
-            oled_write_P(PSTR("Perfil: Quantum\n"), false);
-            oled_write_P(PSTR("        |        \n"), false);
-            oled_write_P(PSTR("qk_boot |        \n"), false);
-            oled_write_P(PSTR("        |  qk_exec"), false);
+            oled_write_P(PSTR("Perfil: Quantum           \n"), false);
+            oled_write_P(PSTR("        |                 \n"), false);
+            oled_write_P(PSTR("qk_boot |                 \n"), false);
+            oled_write_P(PSTR("        |  qk_exec          "), false);
             break;
         case 3:
-            oled_write_P(PSTR("Perfil: Media\n"), false);
-            oled_write_P(PSTR("        |  next\n"), false);
-            oled_write_P(PSTR("mute    |  back\n"), false);
-            oled_write_P(PSTR("p/s     |         "), false);
+            oled_write_P(PSTR("Perfil: Media             \n"), false);
+            oled_write_P(PSTR("back   |  mute   |  next  \n"), false);
+            oled_write_P(PSTR("p/s    |  mprv            \n"), false);
+            oled_write_P(PSTR("       |                    "), false);
             break;
         case 4:
-            oled_write_P(PSTR("Perfil: GIT\n"), false);
-            oled_write_P(PSTR("status  |  diff\n"), false);
-            oled_write_P(PSTR("push    |  pull\n"), false);
-            oled_write_P(PSTR("        |         "), false);
+            oled_write_P(PSTR("Perfil: GIT                 \n"), false);
+            oled_write_P(PSTR("diff   |  pull | push       \n"), false);
+            oled_write_P(PSTR("status |  add  | commit     \n"), false);
+            oled_write_P(PSTR("log    | diff2 |              "), false);
+            break;
+        case 5:
+            oled_write_P(PSTR("Perfil: TESTE               \n"), false);
+            oled_write_P(PSTR("b1 | b2 | b3                \n"), false);
+            oled_write_P(PSTR("b4 | b5 | b6                \n"), false);
+            oled_write_P(PSTR("b7 | b8 | b9                \n"), false);
             break;
         default:
             // Or use the write_ln shortcut over adding '\n' to the end of your string
