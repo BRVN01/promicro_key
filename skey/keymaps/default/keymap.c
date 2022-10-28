@@ -111,8 +111,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // Layers (2=quantum | 3=media | 4=git | 0=base)
 	[1] = LAYOUT(
         KC_NO, TO(0), KC_NO,
-        TO(3), KC_NO, KC_NO,
-        TO(2), KC_NO, KC_NO,
+        TO(3), TO(5), KC_NO,
+        TO(2), TO(6), KC_NO,
         TO(4), KC_NO, KC_NO
     ),
   // Quantum
@@ -126,15 +126,29 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[3] = LAYOUT(
         KC_NO,   TO(1),   KC_NO,
         KC_MPRV, KC_MUTE, KC_MNXT,
-        KC_MPLY, KC_MSEL, KC_F18,
-        KC_VOLU, KC_VOLD, KC_NO
+        KC_MPLY, KC_MSEL, KC_NO,
+        KC_VOLD, KC_VOLU, KC_NO
     ),
   // GIT
 	[4] = LAYOUT(
         KC_NO,     TO(1),         KC_NO,
         gitdiff,   gitpull,       gitpush,
         gitstatus, gitadd,        gitcommit,
-        gitlog,    gitdiffstaged, KC_EXEC
+        gitlog,    gitdiffstaged, KC_NO
+    ),
+  // DISCORD
+	[5] = LAYOUT(
+        KC_NO,              TO(1),             KC_NO,
+        LCTL(LSFT(KC_F1)),  LCTL(LSFT(KC_F2)), KC_NO,
+        KC_NO,              KC_NO,             KC_NO,
+        KC_NO,              KC_NO,             KC_NO
+    ),
+  // Gaming
+	[6] = LAYOUT(
+        KC_NO,  TO(1), KC_NO,
+        KC_F1,  KC_F2, KC_F3,
+        KC_F4,  KC_F5, KC_F6,
+        KC_F7,  KC_F8, KC_F9
     )
 //	[5] = LAYOUT(
 //        KC_NO,   TO(1),
@@ -149,7 +163,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {    
     case BR_ACUT:
       if (record->event.pressed) {
-        SEND_STRING("```");
+        SEND_STRING("`");
       }
       return false;
       break;
@@ -179,13 +193,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break;   
     case gitadd:
       if (record->event.pressed) {
-        SEND_STRING("git add\n");
+        SEND_STRING("git add");
       }
       return false;
       break;   
     case gitcommit:
       if (record->event.pressed) {
-        SEND_STRING("git commit\n");
+        SEND_STRING("git commit -m");
       }
       return false;
       break;   
@@ -201,61 +215,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;  
-// teste
-//    case b1:
-//      if (record->event.pressed) {
-//        SEND_STRING("b1\n");
-//      }
-//      return false;
-//      break;  
-//    case b2:
-//      if (record->event.pressed) {
-//        SEND_STRING("b2\n");
-//      }
-//      return false;
-//      break;  
-//    case b3:
-//      if (record->event.pressed) {
-//        SEND_STRING("b3\n");
-//      }
-//      return false;
-//      break;  
-//    case b4:
-//      if (record->event.pressed) {
-//        SEND_STRING("b4\n");
-//      }
-//      return false;
-//      break;  
-//    case b5:
-//      if (record->event.pressed) {
-//        SEND_STRING("b5\n");
-//      }
-//      return false;
-//      break;  
-//    case b6:
-//      if (record->event.pressed) {
-//        SEND_STRING("b6\n");
-//      }
-//      return false;
-//      break;  
-//    case b7:
-//      if (record->event.pressed) {
-//        SEND_STRING("b7\n");
-//      }
-//      return false;
-//      break;  
-//    case b8:
-//      if (record->event.pressed) {
-//        SEND_STRING("b8\n");
-//      }
-//      return false;
-//      break;  
-//    case b9:
-//      if (record->event.pressed) {
-//        SEND_STRING("b9\n");
-//      }
-//      return false;
-//      break;
   }
   return true;
 };
@@ -264,34 +223,74 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 bool oled_task_user(void) {
     switch (get_highest_layer(layer_state)) {
         case 0:
-            oled_write_P(PSTR("Perfil: Common   \n"), false);
-            oled_write_P(PSTR(" `   |LNG1 |Alt+1\n"), false);
-            oled_write_P(PSTR("alt+2|alt+3|Alt+4\n"), false);
-            oled_write_P(PSTR("alt+5|alt+6|Alt+7  "), false);
+            oled_write_P(PSTR(" __________________ \n"), false);
+            oled_write_P(PSTR("|     |      |     |\n"), false);
+            oled_write_P(PSTR("|`    | LNG1 | ALT1|\n"), false);
+            oled_write_P(PSTR("|-----|------|-----|\n"), false);
+            oled_write_P(PSTR("|ALT2 | ALT3 | ALT4|\n"), false);
+            oled_write_P(PSTR("|-----|------|-----|\n"), false);
+            oled_write_P(PSTR("|ALT5 | ALT6 | ALT7|\n"), false);
+            oled_write_P(PSTR("|_____|______|_____|\n"), false);
             break;
         case 1:
-            oled_write_P(PSTR("Perfil: Layers   \n"), false);
-            oled_write_P(PSTR("Media   | Teste |\n"), false);
-            oled_write_P(PSTR("Quantum | Base  |\n"), false);
-            oled_write_P(PSTR("GIT     |       |  "), false);
+            oled_write_P(PSTR(" __________________ \n"), false);
+            oled_write_P(PSTR("|     |      |     |\n"), false);
+            oled_write_P(PSTR("|SONG | DISC |     |\n"), false);
+            oled_write_P(PSTR("|-----|------|-----|\n"), false);
+            oled_write_P(PSTR("|UPDA | GAME |     |\n"), false);
+            oled_write_P(PSTR("|-----|------|-----|\n"), false);
+            oled_write_P(PSTR("|GIT  |      |     |\n"), false);
+            oled_write_P(PSTR("|_____|______|_____|\n"), false);
             break;
         case 2:
-            oled_write_P(PSTR("Perfil: Quantum  \n"), false);
-            oled_write_P(PSTR("        |       |\n"), false);
-            oled_write_P(PSTR("qk_boot |       |\n"), false);
-            oled_write_P(PSTR("        |       |  "), false);
+            oled_write_P(PSTR(" __________________ \n"), false);
+            oled_write_P(PSTR("|     |      |     |\n"), false);
+            oled_write_P(PSTR("|     |      |     |\n"), false);
+            oled_write_P(PSTR("|-----|------|-----|\n"), false);
+            oled_write_P(PSTR("|BOOT |      |     |\n"), false);
+            oled_write_P(PSTR("|-----|------|-----|\n"), false);
+            oled_write_P(PSTR("|     |      |     |\n"), false);
+            oled_write_P(PSTR("|_____|______|_____|\n"), false);
             break;
         case 3:
-            oled_write_P(PSTR("Perfil: Media    \n"), false);
-            oled_write_P(PSTR("back |mute  |next\n"), false);
-            oled_write_P(PSTR("p/s  |Sconf |mute\n"), false);
-            oled_write_P(PSTR("VolUP|VolDow|      "), false);
+            oled_write_P(PSTR(" __________________ \n"), false);
+            oled_write_P(PSTR("|     |      |     |\n"), false);
+            oled_write_P(PSTR("|BACK | M/AU | NEXT|\n"), false);
+            oled_write_P(PSTR("|-----|------|-----|\n"), false);
+            oled_write_P(PSTR("|P/S  | CONF | M/MI|\n"), false);
+            oled_write_P(PSTR("|-----|------|-----|\n"), false);
+            oled_write_P(PSTR("|V/DO | V/UP |     |\n"), false);
+            oled_write_P(PSTR("|_____|______|_____|\n"), false);
             break;
         case 4:
-            oled_write_P(PSTR("Perfil: GIT      \n"), false);
-            oled_write_P(PSTR("diff | pull | pus\n"), false);
-            oled_write_P(PSTR("stat | add  | com\n"), false);
-            oled_write_P(PSTR("log  | dif2 |      "), false);
+            oled_write_P(PSTR(" __________________ \n"), false);
+            oled_write_P(PSTR("|     |      |     |\n"), false);
+            oled_write_P(PSTR("|DIFF | PULL | PUSH|\n"), false);
+            oled_write_P(PSTR("|-----|------|-----|\n"), false);
+            oled_write_P(PSTR("|STAT | ADD  | COMM|\n"), false);
+            oled_write_P(PSTR("|-----|------|-----|\n"), false);
+            oled_write_P(PSTR("|LOG  | DIF2 |     |\n"), false);
+            oled_write_P(PSTR("|_____|______|_____|\n"), false);
+            break;
+        case 5:
+            oled_write_P(PSTR(" __________________ \n"), false);
+            oled_write_P(PSTR("|     |      |     |\n"), false);
+            oled_write_P(PSTR("|NF-M | NF-S |     |\n"), false);
+            oled_write_P(PSTR("|-----|------|-----|\n"), false);
+            oled_write_P(PSTR("|     |      |     |\n"), false);
+            oled_write_P(PSTR("|-----|------|-----|\n"), false);
+            oled_write_P(PSTR("|     |      |     |\n"), false);
+            oled_write_P(PSTR("|_____|______|_____|\n"), false);
+            break;
+        case 6:
+            oled_write_P(PSTR(" __________________ \n"), false);
+            oled_write_P(PSTR("|     |      |     |\n"), false);
+            oled_write_P(PSTR("|     |      |     |\n"), false);
+            oled_write_P(PSTR("|-----|------|-----|\n"), false);
+            oled_write_P(PSTR("|     |      |     |\n"), false);
+            oled_write_P(PSTR("|-----|------|-----|\n"), false);
+            oled_write_P(PSTR("|     |      |     |\n"), false);
+            oled_write_P(PSTR("|_____|______|_____|\n"), false);
             break;
 //        case 5:
 //            oled_write_P(PSTR("Perfil: TESTE\n"), false);

@@ -7,6 +7,10 @@
 #define MANUFACTURER    BSD
 #define PRODUCT         keyboard
 
+// Oled conf
+#define OLED_DISPLAY_128X64
+#define OLED_TIMEOUT 0
+
 //#undef TAPPING_TERM
 //#define TAPPING_TERM 250
 //#define ONESHOT_TIMEOUT 500
