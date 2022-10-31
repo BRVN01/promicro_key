@@ -79,11 +79,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
               │ Layers  │
               └─────────┘
     ┌─────────┬─────────┬─────────┐
-    │ Prev    │ Mute    │ Next    │
+    │ Prev    │ M-AU    │ Next    │
     ├─────────┼─────────┼─────────┤
-    │ Pla/Sto │         │         │
+    │ Pla/Sto │ Conf    │ M-MI    │
     ├─────────┼─────────┼─────────┤
-    │         │         │         │
+    │ V-Do    │ V-UP    │         │
     └─────────┴─────────┴─────────┘ 
 
 
@@ -126,7 +126,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[3] = LAYOUT(
         KC_NO,   TO(1),   KC_NO,
         KC_MPRV, KC_MUTE, KC_MNXT,
-        KC_MPLY, KC_MSEL, KC_NO,
+        KC_MPLY, KC_MSEL, LCTL(LSFT(KC_A)),
         KC_VOLD, KC_VOLU, KC_NO
     ),
   // GIT
