@@ -104,7 +104,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // Base or Common layer
 	[0] = LAYOUT(
     KC_NO,       TO(1),          KC_NO,
-		BR_ACUT,     LT(2, KC_LNG1), LALT(KC_P1),
+		LALT(KC_P8), LT(2, KC_LNG1), LALT(KC_P1),
     LALT(KC_P2), LALT(KC_P3),    LALT(KC_P4),
 		LALT(KC_P5), LALT(KC_P6),    LALT(KC_P7)
 	),
@@ -127,14 +127,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_NO,   TO(1),   KC_NO,
         KC_MPRV, KC_MUTE, KC_MNXT,
         KC_MPLY, KC_MSEL, LCTL(LSFT(KC_A)),
-        KC_VOLD, KC_VOLU, KC_NO
+        KC_VOLD, KC_VOLU, BR_ACUT
     ),
   // GIT
 	[4] = LAYOUT(
         KC_NO,     TO(1),         KC_NO,
         gitdiff,   gitpull,       gitpush,
         gitstatus, gitadd,        gitcommit,
-        gitlog,    gitdiffstaged, KC_NO
+        gitlog,    gitdiffstaged, BR_ACUT
     ),
   // DISCORD
 	[5] = LAYOUT(
@@ -225,7 +225,7 @@ bool oled_task_user(void) {
         case 0:
             oled_write_P(PSTR(" __________________ \n"), false);
             oled_write_P(PSTR("|     |      |     |\n"), false);
-            oled_write_P(PSTR("|`    | LNG1 | ALT1|\n"), false);
+            oled_write_P(PSTR("|ALT8 | LNG1 | ALT1|\n"), false);
             oled_write_P(PSTR("|-----|------|-----|\n"), false);
             oled_write_P(PSTR("|ALT2 | ALT3 | ALT4|\n"), false);
             oled_write_P(PSTR("|-----|------|-----|\n"), false);
@@ -259,7 +259,7 @@ bool oled_task_user(void) {
             oled_write_P(PSTR("|-----|------|-----|\n"), false);
             oled_write_P(PSTR("|P/S  | CONF | M/MI|\n"), false);
             oled_write_P(PSTR("|-----|------|-----|\n"), false);
-            oled_write_P(PSTR("|V/DO | V/UP |     |\n"), false);
+            oled_write_P(PSTR("|V/DO | V/UP | `   |\n"), false);
             oled_write_P(PSTR("|_____|______|_____|\n"), false);
             break;
         case 4:
@@ -269,7 +269,7 @@ bool oled_task_user(void) {
             oled_write_P(PSTR("|-----|------|-----|\n"), false);
             oled_write_P(PSTR("|STAT | ADD  | COMM|\n"), false);
             oled_write_P(PSTR("|-----|------|-----|\n"), false);
-            oled_write_P(PSTR("|LOG  | DIF2 |     |\n"), false);
+            oled_write_P(PSTR("|LOG  | DIF2 | `   |\n"), false);
             oled_write_P(PSTR("|_____|______|_____|\n"), false);
             break;
         case 5:
