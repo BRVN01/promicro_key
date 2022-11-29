@@ -22,6 +22,7 @@ enum my_keycodes {
   gitlog,
   gitdiffstaged,
   mutt_s,
+  sudo_su,
   vagrant_up,
   vagrant_init,
   vagrant_destroy,
@@ -150,7 +151,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[7] = LAYOUT(
         KC_NO,            TO(1),         KC_NO,
         vagrant_status,   vagrant_up,    vagrant_init,
-        vagrant_destroy,  vagrant_vali,  KC_NO,
+        vagrant_destroy,  vagrant_vali,  sudo_su,
         vagrant_halt,     vagrant_ssh,   KC_NO
     )
 //	[5] = LAYOUT(
@@ -261,6 +262,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
+    case sudo_su:
+      if (record->event.pressed) {
+        SEND_STRING("sudo su\n");
+      }
+      return false;
+      break;
     case mutt_s:
       if (record->event.pressed) {
         register_code(KC_O);
@@ -352,7 +359,7 @@ bool oled_task_user(void) {
             oled_write_P(PSTR("|     |      |     |\n"), false);
             oled_write_P(PSTR("|STAT | UP   | INIT|\n"), false);
             oled_write_P(PSTR("|-----|------|-----|\n"), false);
-            oled_write_P(PSTR("|DEST | VALI |     |\n"), false);
+            oled_write_P(PSTR("|DEST | VALI | SU  |\n"), false);
             oled_write_P(PSTR("|-----|------|-----|\n"), false);
             oled_write_P(PSTR("|HALT | SSH  |     |\n"), false);
             oled_write_P(PSTR("|_____|______|_____|\n"), false);
