@@ -27,7 +27,8 @@ enum my_keycodes {
   vagrant_destroy,
   vagrant_halt,
   vagrant_vali,
-  vagrant_status
+  vagrant_status,
+  vagrant_ssh
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -150,7 +151,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_NO,            TO(1),         KC_NO,
         vagrant_status,   vagrant_up,    vagrant_init,
         vagrant_destroy,  vagrant_vali,  KC_NO,
-        vagrant_halt,     KC_NO,         KC_NO
+        vagrant_halt,     vagrant_ssh,   KC_NO
     )
 //	[5] = LAYOUT(
 //        KC_NO,   TO(1),
@@ -254,6 +255,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
+    case vagrant_ssh:
+      if (record->event.pressed) {
+        SEND_STRING("vagrant ssh ");
+      }
+      return false;
+      break;
     case mutt_s:
       if (record->event.pressed) {
         register_code(KC_O);
@@ -347,7 +354,7 @@ bool oled_task_user(void) {
             oled_write_P(PSTR("|-----|------|-----|\n"), false);
             oled_write_P(PSTR("|DEST | VALI |     |\n"), false);
             oled_write_P(PSTR("|-----|------|-----|\n"), false);
-            oled_write_P(PSTR("|HALT |      |     |\n"), false);
+            oled_write_P(PSTR("|HALT | SSH  |     |\n"), false);
             oled_write_P(PSTR("|_____|______|_____|\n"), false);
             break;
 //        case 5:
