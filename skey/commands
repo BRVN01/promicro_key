@@ -1,0 +1,3 @@
+qmk compile -kb promicro_key/skey -km default
+
+qmk flash -kb  promicro_key/skey -km default
