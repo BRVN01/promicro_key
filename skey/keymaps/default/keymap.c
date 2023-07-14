@@ -51,11 +51,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
               │  base   │
               └─────────┘
     ┌─────────┬─────────┬─────────┐
-    │ Media   │ teste   │         │
+    │ SONG    │ DISCOD  │   OBS   │
     ├─────────┼─────────┼─────────┤
-    │ Quantum │         │         │
+    │ UPDA    │ MUTT    │         │
     ├─────────┼─────────┼─────────┤
-    │ Git     │         │         │
+    │ GIT     │ VAGRANT │         │
     └─────────┴─────────┴─────────┘ 
 
       Quantum_layer - Used to update the firmware
@@ -80,7 +80,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ├─────────┼─────────┼─────────┤
     │ Pla/Sto │ Conf    │ M-MI    │
     ├─────────┼─────────┼─────────┤
-    │ V-Do    │ V-UP    │         │
+    │ V-Do    │ V-UP    │    `    │
     └─────────┴─────────┴─────────┘ 
 
 
@@ -95,6 +95,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ├─────────┼─────────┼─────────┤
     │ LOG     │LOGSTAGED│         │
     └─────────┴─────────┴─────────┘ 
+
+              ┌─────────┐
+              │ Layers  │
+              └─────────┘
+    ┌─────────┬─────────┬─────────┐
+    │ START   │ PAUSE   │ STOP    │
+    ├─────────┼─────────┼─────────┤
+    │         │         │         │
+    ├─────────┼─────────┼─────────┤
+    │         │         │         │
+    └─────────┴─────────┴─────────┘ 
   */
 
 
@@ -108,7 +119,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // Layers (2=quantum | 3=media | 4=git | 0=base)
 	[1] = LAYOUT(
         KC_NO, TO(0), KC_NO,
-        TO(3), TO(5), KC_NO,
+        TO(3), TO(5), TO(8),
         TO(2), TO(6), KC_NO,
         TO(4), TO(7), KC_NO
     ),
@@ -153,6 +164,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         vagrant_status,   vagrant_up,    vagrant_init,
         vagrant_destroy,  vagrant_vali,  sudo_su,
         vagrant_halt,     vagrant_ssh,   KC_NO
+    ),
+	[8] = LAYOUT(
+        KC_NO,    TO(1),   KC_NO,
+        KC_F13,   KC_F14,  KC_F15,
+        KC_NO,    KC_NO,   KC_NO,
+        KC_NO,    KC_NO,   KC_NO
     )
 //	[5] = LAYOUT(
 //        KC_NO,   TO(1),
@@ -297,7 +314,7 @@ bool oled_task_user(void) {
         case 1:
             oled_write_P(PSTR(" __________________ \n"), false);
             oled_write_P(PSTR("|     |      |     |\n"), false);
-            oled_write_P(PSTR("|SONG | DISC |     |\n"), false);
+            oled_write_P(PSTR("|SONG | DISC | OBS |\n"), false);
             oled_write_P(PSTR("|-----|------|-----|\n"), false);
             oled_write_P(PSTR("|UPDA | MUTT |     |\n"), false);
             oled_write_P(PSTR("|-----|------|-----|\n"), false);
@@ -364,6 +381,16 @@ bool oled_task_user(void) {
             oled_write_P(PSTR("|HALT | SSH  |     |\n"), false);
             oled_write_P(PSTR("|_____|______|_____|\n"), false);
             break;
+        case 8:
+            oled_write_P(PSTR(" __________________ \n"), false);
+            oled_write_P(PSTR("|     |      |     |\n"), false);
+            oled_write_P(PSTR("|START|PAUSE | STOP|\n"), false);
+            oled_write_P(PSTR("|-----|------|-----|\n"), false);
+            oled_write_P(PSTR("|     |      |     |\n"), false);
+            oled_write_P(PSTR("|-----|------|-----|\n"), false);
+            oled_write_P(PSTR("|     |      |     |\n"), false);
+            oled_write_P(PSTR("|_____|______|_____|\n"), false);
+            break;
 //        case 5:
 //            oled_write_P(PSTR("Perfil: TESTE\n"), false);
 //            oled_write_P(PSTR("b1 | b2 | b3 \n"), false);
@@ -414,3 +441,5 @@ bool oled_task_user(void) {
 // http://www.curlap.com/support/developers/curl/docs/rte/latest/en/docs/en/api-ref/Keycode.html
 
 // https://github.com/qmk/qmk_firmware/blob/master/docs/feature_advanced_keycodes.md#modifier-keys
+
+// https://docs.qmk.fm/#/contributing?id=previewing-the-documentation

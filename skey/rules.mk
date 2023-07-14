@@ -1,9 +1,3 @@
-# MCU name
-MCU = atmega32u4
-
-# Bootloader selection
-BOOTLOADER = caterina
-
 # Build Options
 #   change yes to no to disable
 #
@@ -18,6 +12,5 @@ RGBLIGHT_ENABLE = no        # Enable keyboard RGB underglow
 AUDIO_ENABLE = no           # Audio output
 ENCODER_ENABLE = no
 UNICODE_ENABLE = no
-PROGRAMMABLE_BUTTON_ENABLE = yes
 OLED_ENABLE = yes			# Enable Display Oled (https://github.com/qmk/qmk_firmware/blob/master/docs/feature_oled_driver.md)
 OLED_DRIVER = SSD1306
