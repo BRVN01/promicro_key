@@ -20,19 +20,16 @@ enum my_keycodes {
   gitadd,
   gitcommit,
   gitlog,
-  gitdiffstaged
-};
-
-enum teste {
-  b1 = SAFE_RANGE,
-  b2,
-  b3,
-  b4,
-  b5,
-  b6,
-  b7,
-  b8,
-  b9
+  gitdiffstaged,
+  mutt_s,
+  sudo_su,
+  vagrant_up,
+  vagrant_init,
+  vagrant_destroy,
+  vagrant_halt,
+  vagrant_vali,
+  vagrant_status,
+  vagrant_ssh
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -54,11 +51,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
               │  base   │
               └─────────┘
     ┌─────────┬─────────┬─────────┐
-    │ Media   │ teste   │         │
+    │ SONG    │ DISCOD  │   OBS   │
     ├─────────┼─────────┼─────────┤
-    │ Quantum │         │         │
+    │ UPDA    │ MUTT    │         │
     ├─────────┼─────────┼─────────┤
-    │ Git     │         │         │
+    │ GIT     │ VAGRANT │         │
     └─────────┴─────────┴─────────┘ 
 
       Quantum_layer - Used to update the firmware
@@ -83,7 +80,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ├─────────┼─────────┼─────────┤
     │ Pla/Sto │ Conf    │ M-MI    │
     ├─────────┼─────────┼─────────┤
-    │ V-Do    │ V-UP    │         │
+    │ V-Do    │ V-UP    │    `    │
     └─────────┴─────────┴─────────┘ 
 
 
@@ -98,6 +95,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ├─────────┼─────────┼─────────┤
     │ LOG     │LOGSTAGED│         │
     └─────────┴─────────┴─────────┘ 
+
+              ┌─────────┐
+              │ Layers  │
+              └─────────┘
+    ┌─────────┬─────────┬─────────┐
+    │ START   │ PAUSE   │ STOP    │
+    ├─────────┼─────────┼─────────┤
+    │         │         │         │
+    ├─────────┼─────────┼─────────┤
+    │         │         │         │
+    └─────────┴─────────┴─────────┘ 
   */
 
 
@@ -108,12 +116,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     LALT(KC_P2), LALT(KC_P3),    LALT(KC_P4),
 		LALT(KC_P5), LALT(KC_P6),    LALT(KC_P7)
 	),
-  // Layers (2=quantum | 3=media | 4=git | 0=base)
+  // Layers (2=quantum | 3=media | 4=git | 5=discord | 6=mutt | 7=obs | 0=base)
 	[1] = LAYOUT(
         KC_NO, TO(0), KC_NO,
-        TO(3), TO(5), KC_NO,
+        TO(3), TO(5), TO(8),
         TO(2), TO(6), KC_NO,
-        TO(4), KC_NO, KC_NO
+        TO(4), TO(7), KC_NO
     ),
   // Quantum
 	[2] = LAYOUT(
@@ -143,12 +151,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_NO,              KC_NO,             KC_NO,
         KC_NO,              KC_NO,             KC_NO
     ),
-  // Gaming
+  // Mutt
 	[6] = LAYOUT(
-        KC_NO,  TO(1), KC_NO,
-        KC_F1,  KC_F2, KC_F3,
-        KC_F4,  KC_F5, KC_F6,
-        KC_F7,  KC_F8, KC_F9
+        KC_NO,    TO(1),    KC_NO,
+        KC_Q,     KC_UP,    KC_I,
+        KC_LEFT,  KC_ENT,   KC_RIGHT,
+        mutt_s,   KC_DOWN,  KC_END
+    ),
+  // Vagrant
+	[7] = LAYOUT(
+        KC_NO,            TO(1),         KC_NO,
+        vagrant_status,   vagrant_up,    vagrant_init,
+        vagrant_destroy,  vagrant_vali,  sudo_su,
+        vagrant_halt,     vagrant_ssh,   KC_NO
+    ),
+  // OBS
+	[8] = LAYOUT(
+        KC_NO,    TO(1),   KC_NO,
+        LCTL(LSFT(KC_1)),   LCTL(LSFT(KC_2)),  LCTL(LSFT(KC_3)),
+        LCTL(LSFT(KC_6 )),    LCTL(LSFT(KC_5)),   KC_NO,
+        LCTL(LSFT(KC_7)),    LCTL(LSFT(KC_8)),   LCTL(LSFT(KC_9))
     )
 //	[5] = LAYOUT(
 //        KC_NO,   TO(1),
@@ -166,7 +188,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         SEND_STRING("`");
       }
       return false;
-      break;
+      break;    
     case gitstatus:
       if (record->event.pressed) {
         SEND_STRING("git status\n");
@@ -214,6 +236,64 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         SEND_STRING("git diff --staged\n");
       }
       return false;
+      break;
+
+    case vagrant_up:
+      if (record->event.pressed) {
+        SEND_STRING("vagrant up\n");
+      }
+      return false;
+      break;
+    case vagrant_init:
+      if (record->event.pressed) {
+        SEND_STRING("vagrant init ");
+      }
+      return false;
+      break;
+    case vagrant_destroy:
+      if (record->event.pressed) {
+        SEND_STRING("vagrant destroy -f\n");
+      }
+      return false;
+      break;
+    case vagrant_halt:
+      if (record->event.pressed) {
+        SEND_STRING("vagrant halt\n");
+      }
+      return false;
+      break;
+    case vagrant_vali:
+      if (record->event.pressed) {
+        SEND_STRING("vagrant validate \n");
+      }
+      return false;
+      break;
+    case vagrant_status:
+      if (record->event.pressed) {
+        SEND_STRING("vagrant status\n");
+      }
+      return false;
+      break;
+    case vagrant_ssh:
+      if (record->event.pressed) {
+        SEND_STRING("vagrant ssh ");
+      }
+      return false;
+      break;
+    case sudo_su:
+      if (record->event.pressed) {
+        SEND_STRING("sudo su\n");
+      }
+      return false;
+      break;
+    case mutt_s:
+      if (record->event.pressed) {
+        register_code(KC_O);
+        unregister_code(KC_O);
+        register_code(KC_R);      
+        unregister_code(KC_R);
+      }
+      return false;
       break;  
   }
   return true;
@@ -235,11 +315,11 @@ bool oled_task_user(void) {
         case 1:
             oled_write_P(PSTR(" __________________ \n"), false);
             oled_write_P(PSTR("|     |      |     |\n"), false);
-            oled_write_P(PSTR("|SONG | DISC |     |\n"), false);
+            oled_write_P(PSTR("|SONG | DISC | OBS |\n"), false);
             oled_write_P(PSTR("|-----|------|-----|\n"), false);
-            oled_write_P(PSTR("|UPDA | GAME |     |\n"), false);
+            oled_write_P(PSTR("|UPDA | MUTT |     |\n"), false);
             oled_write_P(PSTR("|-----|------|-----|\n"), false);
-            oled_write_P(PSTR("|GIT  |      |     |\n"), false);
+            oled_write_P(PSTR("|GIT  | VAGR |     |\n"), false);
             oled_write_P(PSTR("|_____|______|_____|\n"), false);
             break;
         case 2:
@@ -285,11 +365,31 @@ bool oled_task_user(void) {
         case 6:
             oled_write_P(PSTR(" __________________ \n"), false);
             oled_write_P(PSTR("|     |      |     |\n"), false);
-            oled_write_P(PSTR("|     |      |     |\n"), false);
+            oled_write_P(PSTR("| Q   | UP   | I   |\n"), false);
             oled_write_P(PSTR("|-----|------|-----|\n"), false);
-            oled_write_P(PSTR("|     |      |     |\n"), false);
+            oled_write_P(PSTR("| LEFT| ENTER| RIGH|\n"), false);
             oled_write_P(PSTR("|-----|------|-----|\n"), false);
+            oled_write_P(PSTR("| O+R | DOWN | END |\n"), false);
+            oled_write_P(PSTR("|_____|______|_____|\n"), false);
+            break;
+        case 7:
+            oled_write_P(PSTR(" __________________ \n"), false);
             oled_write_P(PSTR("|     |      |     |\n"), false);
+            oled_write_P(PSTR("|STAT | UP   | INIT|\n"), false);
+            oled_write_P(PSTR("|-----|------|-----|\n"), false);
+            oled_write_P(PSTR("|DEST | VALI | SU  |\n"), false);
+            oled_write_P(PSTR("|-----|------|-----|\n"), false);
+            oled_write_P(PSTR("|HALT | SSH  |     |\n"), false);
+            oled_write_P(PSTR("|_____|______|_____|\n"), false);
+            break;
+        case 8:
+            oled_write_P(PSTR(" __________________ \n"), false);
+            oled_write_P(PSTR("|     |      |     |\n"), false);
+            oled_write_P(PSTR("|START|PAUSE | STOP|\n"), false);
+            oled_write_P(PSTR("|-----|------|-----|\n"), false);
+            oled_write_P(PSTR("|M_DES|M_HEAD|     |\n"), false);
+            oled_write_P(PSTR("|-----|------|-----|\n"), false);
+            oled_write_P(PSTR("|S-MA | S-BRO| NONE|\n"), false);
             oled_write_P(PSTR("|_____|______|_____|\n"), false);
             break;
 //        case 5:
@@ -342,3 +442,5 @@ bool oled_task_user(void) {
 // http://www.curlap.com/support/developers/curl/docs/rte/latest/en/docs/en/api-ref/Keycode.html
 
 // https://github.com/qmk/qmk_firmware/blob/master/docs/feature_advanced_keycodes.md#modifier-keys
+
+// https://docs.qmk.fm/#/contributing?id=previewing-the-documentation

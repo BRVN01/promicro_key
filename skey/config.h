@@ -1,22 +1,8 @@
-#include "config_common.h"
-
-/* USB Device descriptor parameter */
-#define VENDOR_ID       0xDB30
-#define PRODUCT_ID      0x6080
-#define DEVICE_VER      0x0010
-#define MANUFACTURER    BSD
-#define PRODUCT         keyboard
-
 // Oled conf
 #define OLED_DISPLAY_128X64
 #define OLED_TIMEOUT 0
 
-//#undef TAPPING_TERM
-//#define TAPPING_TERM 250
-//#define ONESHOT_TIMEOUT 500
-//#define ONESHOT_TAP_TOGGLE 3
-
-//#define UNICODE_SELECTED_MODES UC_WINC, UC_LNX, UC_MAC
+#define DEVICE_VER      0x0001
 
 /* key matrix size */
 #define MATRIX_ROWS 4
@@ -33,5 +19,10 @@
 #define ENCODERS_PAD_A { D2 }
 #define ENCODERS_PAD_B { D3 }
 
-/* Debounce reduces chatter (unintended double-presses) - set 0 if debouncing is not needed */
-#define DEBOUNCE 5
+#pragma once
+
+/* Mechanical locking support. Use KC_LCAP, KC_LNUM or KC_LSCR instead in keymap */
+#define LOCKING_SUPPORT_ENABLE
+
+/* Locking resynchronize hack */
+#define LOCKING_RESYNC_ENABLE
