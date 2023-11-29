@@ -29,7 +29,9 @@ enum my_keycodes {
   vagrant_halt,
   vagrant_vali,
   vagrant_status,
-  vagrant_ssh
+  vagrant_ssh,
+  html_return,
+  title
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -78,9 +80,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ┌─────────┬─────────┬─────────┐
     │ Prev    │ M-AU    │ Next    │
     ├─────────┼─────────┼─────────┤
-    │ Pla/Sto │ Conf    │ M-MI    │
+    │ Pla/Sto │ V-Down  │ V-UP    │
     ├─────────┼─────────┼─────────┤
-    │ V-Do    │ V-UP    │    `    │
+    │  title  │ <br />  │    `    │
     └─────────┴─────────┴─────────┘ 
 
 
@@ -134,8 +136,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[3] = LAYOUT(
         KC_NO,   TO(1),   KC_NO,
         KC_MPRV, KC_MUTE, KC_MNXT,
-        KC_MPLY, KC_MSEL, LCTL(LSFT(KC_A)),
-        KC_VOLD, KC_VOLU, BR_ACUT
+        KC_MPLY, KC_VOLD, KC_VOLU,
+        title, html_return, BR_ACUT
     ),
   // GIT
 	[4] = LAYOUT(
@@ -295,6 +297,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;  
+    case html_return:
+      if (record->event.pressed) {
+        SEND_STRING("<br />\n");
+      }
+      return false;
+      break;
+    case title:
+      if (record->event.pressed) {
+        SEND_STRING("<br />\n\n<br />\n\n## \n----\n");
+        /*register_code(LSFT(BR_ACUT));*/
+        /*unregister_code(LSFT(BR_ACUT));*/
+      }
+      return false;
+      break;
   }
   return true;
 };
@@ -337,9 +353,9 @@ bool oled_task_user(void) {
             oled_write_P(PSTR("|     |      |     |\n"), false);
             oled_write_P(PSTR("|BACK | M/AU | NEXT|\n"), false);
             oled_write_P(PSTR("|-----|------|-----|\n"), false);
-            oled_write_P(PSTR("|P/S  | CONF | M/MI|\n"), false);
+            oled_write_P(PSTR("|P/S  | V/DO | V/UP|\n"), false);
             oled_write_P(PSTR("|-----|------|-----|\n"), false);
-            oled_write_P(PSTR("|V/DO | V/UP | `   |\n"), false);
+            oled_write_P(PSTR("| Tit | <br> | `   |\n"), false);
             oled_write_P(PSTR("|_____|______|_____|\n"), false);
             break;
         case 4:
@@ -444,3 +460,6 @@ bool oled_task_user(void) {
 // https://github.com/qmk/qmk_firmware/blob/master/docs/feature_advanced_keycodes.md#modifier-keys
 
 // https://docs.qmk.fm/#/contributing?id=previewing-the-documentation
+
+// qmk compile -kb promicro_key/skey -km default
+// qmk flash -kb promicro_key/skey -km default
