@@ -1,0 +1,12 @@
+# Copyright (c) 2021 Nick Winans
+# SPDX-License-Identifier: MIT
+
+# Define uma nova opção de configuração chamada 'BOARD_ENABLE_DCDC':
+config BOARD_ENABLE_DCDC
+    bool "Enable DCDC mode"
+    # Ativa automaticamente a opção SOC_DCDC_NRF52X (veja pelo menuconfig), que configura o regulador de energia DC-DC do NRF52:
+    select SOC_DCDC_NRF52X
+    # Ativa essa configuração:
+    default y
+    # Só permite ativar essa configuração se a board sendo compilada for a 'macrokeyboard':
+    depends on BOARD_MACROKEYBOARD

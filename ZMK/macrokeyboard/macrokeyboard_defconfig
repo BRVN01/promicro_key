@@ -1,0 +1,67 @@
+# Copyright (c) 2021 Nick Winans
+# SPDX-License-Identifier: MIT
+
+# Define que o teclado usa um SoC da série NRF52.
+CONFIG_SOC_SERIES_NRF52X=y
+
+# Especifica que o SoC é um NRF52840-QIAA.
+CONFIG_SOC_NRF52840_QIAA=y
+
+# Ativa a configuração específica da board macrokeyboard.
+CONFIG_BOARD_MACROKEYBOARD=y
+
+# Enable MPU
+CONFIG_ARM_MPU=y  # Ativa a Unidade de Proteção de Memória (MPU), garantindo segurança na execução do código.
+
+CONFIG_PINCTRL=y  # Habilita o controlador de pinos (pinctrl), necessário para definir a pinagem.
+CONFIG_GPIO=y  # Ativa o suporte a GPIOs, essencial para a matriz de teclas e LEDs.
+
+# Garante que a memória Flash seja usada corretamente, essencial para rodar o firmware.
+# Sem isso, o teclado não é reconhecido pelo Sistema Operacional:
+CONFIG_USE_DT_CODE_PARTITION=y
+
+# Permite gerar um arquivo .uf2 para gravação via bootloader.
+# Sem isso, não deixa fazer o 'west flash':
+CONFIG_BUILD_OUTPUT_UF2=y  
+
+
+## As configurações abaixo são essenciais para armazenar e recuperar os dados de pareamento Bluetooth do teclado no ZMK:
+
+# Permite que o código escreva na Flash.
+# Sem isso, o teclado não pode salvar o pareamento ou qualquer configuração persistente.
+CONFIG_MPU_ALLOW_FLASH_WRITE=y
+
+# Ativa o Non-Volatile Storage (NVS), necessário para armazenar configurações persistentes.
+# O ZMK usa o NVS para salvar informações como chaves de pareamento Bluetooth, configurações RGB e layers ativas.
+CONFIG_NVS=y
+
+# Habilita o uso de configurações persistentes na memória flash.
+# Isso permite salvar configurações e restaurá-las após reinicializações.
+CONFIG_SETTINGS_NVS=y
+
+# Habilita o suporte a Flash.
+# Sem isso, o firmware não consegue gravar ou ler os dados salvos.
+CONFIG_FLASH=y
+
+# Define o layout das páginas da Flash.
+# Garante que o sistema saiba onde salvar e recuperar dados.
+CONFIG_FLASH_PAGE_LAYOUT=y
+
+# Mapeia as regiões da Flash.
+# No ZMK, isso inclui código, NVS e área de armazenamento de configurações.
+CONFIG_FLASH_MAP=y
+
+# Habilita o driver para fitas de LED WS2812.
+#CONFIG_WS2812_STRIP=n
+
+# Desativa o suporte a iluminação RGB underglow no ZMK.
+#CONFIG_ZMK_RGB_UNDERGLOW=n
+
+# Define a tonalidade inicial da cor (Hue).
+#CONFIG_ZMK_RGB_UNDERGLOW_HUE_START=160
+
+# Define o efeito inicial da iluminação RGB.
+#CONFIG_ZMK_RGB_UNDERGLOW_EFF_START=3
+
+CONFIG_ZMK_USB=y  # Ativa o suporte a USB no ZMK.
+CONFIG_ZMK_BLE=y  # Ativa o suporte a Bluetooth Low Energy (BLE).

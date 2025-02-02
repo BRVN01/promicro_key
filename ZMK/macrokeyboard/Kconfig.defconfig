@@ -1,0 +1,25 @@
+# Copyright (c) 2021 Nick Winans
+# SPDX-License-Identifier: MIT
+
+if BOARD_MACROKEYBOARD
+
+# Cria uma configuração para definir o nome do teclado:
+config ZMK_KEYBOARD_NAME
+    # Define o nome padrão do teclado, o mesmo para o Bluetooth:
+    default "MacroKeyBoard"
+
+# Se o suporte a USB estiver ativado
+if USB_DEVICE_STACK
+
+config USB_NRFX
+    # Habilita automaticamente o driver USB da Nordic (NRFX).
+    # Isso é importante para teclados que têm suporte a USB HID.
+    default y
+
+endif # USB_DEVICE_STACK
+
+config BT_CTLR
+    # Define que o controlador Bluetooth padrão será usado:
+    default BT
+
+endif # BOARD_MACROKEYBOARD

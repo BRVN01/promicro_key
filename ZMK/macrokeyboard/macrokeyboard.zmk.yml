@@ -1,0 +1,15 @@
+file_format: "1"
+id: macrokeyboard
+name: MacroKeyBoard
+type: board
+arch: arm
+features:
+  - keys
+  - underglow
+  - studio
+outputs:
+  - usb
+  - ble
+settings:
+  bluetooth:
+    name: "MacroKeyboard"
