@@ -29,7 +29,13 @@ enum my_keycodes {
   vagrant_halt,
   vagrant_vali,
   vagrant_status,
-  vagrant_ssh
+  vagrant_ssh,
+  code,
+  bashin,
+  bashout,
+  title,
+  htmlreturnline,
+  terminal
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -78,11 +84,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ┌─────────┬─────────┬─────────┐
     │ Prev    │ M-AU    │ Next    │
     ├─────────┼─────────┼─────────┤
-    │ Pla/Sto │ Conf    │ M-MI    │
+    │ Pla/Sto │ <br />  │ M-MI    │
     ├─────────┼─────────┼─────────┤
     │ V-Do    │ V-UP    │    `    │
     └─────────┴─────────┴─────────┘ 
 
+      documentation
+              ┌─────────┐
+              │ Layers  │
+              └─────────┘
+    ┌─────────┬─────────┬─────────┐
+    │ Title   │ code    │         │
+    ├─────────┼─────────┼─────────┤
+    │ bashin  │ <br />  │         │
+    ├─────────┼─────────┼─────────┤
+    │ bashout │   `     │terminal │
+    └─────────┴─────────┴─────────┘
 
       GIT
               ┌─────────┐
@@ -120,7 +137,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[1] = LAYOUT(
         KC_NO, TO(0), KC_NO,
         TO(3), TO(5), TO(8),
-        TO(2), TO(6), KC_NO,
+        TO(2), TO(6), TO(9),
         TO(4), TO(7), KC_NO
     ),
   // Quantum
@@ -134,8 +151,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[3] = LAYOUT(
         KC_NO,   TO(1),   KC_NO,
         KC_MPRV, KC_MUTE, KC_MNXT,
-        KC_MPLY, KC_MSEL, LCTL(LSFT(KC_A)),
-        KC_VOLD, KC_VOLU, BR_ACUT
+        KC_MPLY, KC_NO,   KC_NO,
+        KC_VOLD, KC_VOLU, KC_NO
     ),
   // GIT
 	[4] = LAYOUT(
@@ -170,7 +187,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_F13,   KC_F14,  KC_F15,
         KC_NO,    KC_NO,   KC_NO,
         KC_NO,    KC_NO,   KC_NO
-    )
+    ),
+    // Documentation
+    [9] = LAYOUT(
+      KC_NO,      TO(1),      KC_NO,
+      title,      code,       KC_NO,
+      bashin,     htmlreturnline,      KC_NO,
+      bashout,    BR_ACUT,    terminal
+  ),
 //	[5] = LAYOUT(
 //        KC_NO,   TO(1),
 //        b1, b2, b3,
@@ -294,6 +318,42 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;  
+    case htmlreturnline:
+      if (record->event.pressed) {
+        SEND_STRING("<br />\n");
+      }
+      return false;
+      break;
+    case title:
+      if (record->event.pressed) {
+        SEND_STRING("<br />\n\n<br />\n\n##\n----");
+      }
+      return false;
+      break;
+    case code:
+      if (record->event.pressed) {
+        SEND_STRING("```bash\n\n```\n\n");
+      }
+      return false;
+      break;
+    case bashin:
+      if (record->event.pressed) {
+        SEND_STRING("<UnixTerminalgeneric>\n");
+      }
+      return false;
+      break;
+    case bashout:
+      if (record->event.pressed) {
+        SEND_STRING("</UnixTerminalgeneric>\n");
+      }
+      return false;
+      break;
+    case terminal:
+      if (record->event.pressed) {
+        SEND_STRING("<br />\n\n<UnixTerminalgeneric>\n\n```bash\n\n```\n\n</UnixTerminalgeneric>");
+      }
+      return false;
+      break;
   }
   return true;
 };
@@ -316,7 +376,7 @@ bool oled_task_user(void) {
             oled_write_P(PSTR("|     |      |     |\n"), false);
             oled_write_P(PSTR("|SONG | DISC | OBS |\n"), false);
             oled_write_P(PSTR("|-----|------|-----|\n"), false);
-            oled_write_P(PSTR("|UPDA | MUTT |     |\n"), false);
+            oled_write_P(PSTR("|UPDA | MUTT | DOC |\n"), false);
             oled_write_P(PSTR("|-----|------|-----|\n"), false);
             oled_write_P(PSTR("|GIT  | VAGR |     |\n"), false);
             oled_write_P(PSTR("|_____|______|_____|\n"), false);
@@ -336,9 +396,9 @@ bool oled_task_user(void) {
             oled_write_P(PSTR("|     |      |     |\n"), false);
             oled_write_P(PSTR("|BACK | M/AU | NEXT|\n"), false);
             oled_write_P(PSTR("|-----|------|-----|\n"), false);
-            oled_write_P(PSTR("|P/S  | CONF | M/MI|\n"), false);
+            oled_write_P(PSTR("|P/S  |      |     |\n"), false);
             oled_write_P(PSTR("|-----|------|-----|\n"), false);
-            oled_write_P(PSTR("|V/DO | V/UP | `   |\n"), false);
+            oled_write_P(PSTR("|V/DO | V/UP |     |\n"), false);
             oled_write_P(PSTR("|_____|______|_____|\n"), false);
             break;
         case 4:
@@ -389,6 +449,16 @@ bool oled_task_user(void) {
             oled_write_P(PSTR("|     |      |     |\n"), false);
             oled_write_P(PSTR("|-----|------|-----|\n"), false);
             oled_write_P(PSTR("|     |      |     |\n"), false);
+            oled_write_P(PSTR("|_____|______|_____|\n"), false);
+            break;
+        case 9:
+            oled_write_P(PSTR(" __________________ \n"), false);
+            oled_write_P(PSTR("|     |      |     |\n"), false);
+            oled_write_P(PSTR("|Title|code  |     |\n"), false);
+            oled_write_P(PSTR("|-----|------|-----|\n"), false);
+            oled_write_P(PSTR("|bashi|<br />|     |\n"), false);
+            oled_write_P(PSTR("|-----|------|-----|\n"), false);
+            oled_write_P(PSTR("|basho|  `   |termi|\n"), false);
             oled_write_P(PSTR("|_____|______|_____|\n"), false);
             break;
 //        case 5:

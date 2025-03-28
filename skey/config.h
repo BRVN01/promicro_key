@@ -1,6 +1,7 @@
 // Oled conf
 #define OLED_DISPLAY_128X64
 #define OLED_TIMEOUT 0
+//#define MANUFACTURER "BSD Keyboards"
 
 /* key matrix size */
 #define MATRIX_ROWS 4
@@ -13,9 +14,6 @@
     { B5, B1, D7 }, \
     { B4, E6, C6 }  \
 }
-
-#define ENCODERS_PAD_A { D2 }
-#define ENCODERS_PAD_B { D3 }
 
 #pragma once
 

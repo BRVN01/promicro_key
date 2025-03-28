@@ -13,4 +13,4 @@ AUDIO_ENABLE = no           # Audio output
 ENCODER_ENABLE = no
 UNICODE_ENABLE = no
 OLED_ENABLE = yes			# Enable Display Oled (https://github.com/qmk/qmk_firmware/blob/master/docs/feature_oled_driver.md)
-OLED_DRIVER = SSD1306
+OLED_DRIVER = ssd1306
