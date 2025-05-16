@@ -25,7 +25,7 @@ cp -r macrokeyboard ~/git/zmk/app/boards/arm/
 
 west build -p always -b 'macrokeyboard'
 
-# Colocar a placa em modo bootloader:
+# Colocar a placa em modo bootloader (fechar contato entre raw e gnd eu acho):
 west flash
 
 # Erase / Reset
