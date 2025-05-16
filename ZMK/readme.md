@@ -15,7 +15,7 @@
 | `macrokeyboard.yaml` | Binding YAML usado pelo Devicetree para interpretar as definições da board. Especifica como os nós do DTS devem ser processados. |
 | `macrokeyboard.zmk.yml` | Arquivo de configuração do ZMK que define parâmetros globais, como nome BLE (`bluetooth.name`) e outros ajustes. |
 
-
+```
 cd ~/git/zmk/app
 rm -r ~/git/zmk/app/boards/arm/macrokeyboard
 cp -r macrokeyboard ~/git/zmk/app/boards/arm/
@@ -29,4 +29,4 @@ west flash
 
 Criar firmware para reset:
 west build -p always -b 'macrokeyboard' -- -DSHIELD=settings_reset
-
+```
