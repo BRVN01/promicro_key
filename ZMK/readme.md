@@ -16,6 +16,9 @@
 | `macrokeyboard.zmk.yml` | Arquivo de configuração do ZMK que define parâmetros globais, como nome BLE (`bluetooth.name`) e outros ajustes. |
 
 ```
+# Instale o zephyrproject:
+https://docs.zephyrproject.org/latest/develop/getting_started/index.html#get-zephyr-and-install-python-dependencies
+
 cd ~/git/zmk/app
 rm -r ~/git/zmk/app/boards/arm/macrokeyboard
 cp -r macrokeyboard ~/git/zmk/app/boards/arm/
